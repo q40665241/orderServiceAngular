@@ -1,0 +1,107 @@
+<div class="container mt-4 product-profile-container">
+    <h2 class="mb-4">Product Profiles</h2>
+  
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Product List -->
+    <div *ngIf="products.length > 0; else noProducts">
+      <table class="table table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>
+              <button class="btn btn-warning btn-sm me-2" (click)="editProduct(product)">
+                <i class="bi bi-pencil-square"></i> Update
+              </button>
+              <button class="btn btn-danger btn-sm" (click)="deleteProduct(product.id)">
+                <i class="bi bi-trash"></i> Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- No Products Fallback -->
+    <ng-template #noProducts>
+      <div class="alert alert-info">No products available to display.</div>
+    </ng-template>
+  
+    <!-- Add/Update Product Form -->
+    <div class="card mt-4">
+      <div class="card-body">
+        <h3 class="card-title">{{ isEditMode ? 'Update Product' : 'Add New Product' }}</h3>
+        <form (submit)="isEditMode ? updateProduct() : addProduct()">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              [(ngModel)]="productForm.name"
+              name="name"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <textarea
+              id="description"
+              class="form-control"
+              [(ngModel)]="productForm.description"
+              name="description"
+              required
+            ></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="price" class="form-label">Price:</label>
+            <input
+              type="number"
+              id="price"
+              class="form-control"
+              [(ngModel)]="productForm.price"
+              name="price"
+              required
+              min="0"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="quantity" class="form-label">Quantity:</label>
+            <input
+              type="number"
+              id="quantity"
+              class="form-control"
+              [(ngModel)]="productForm.quantity"
+              name="quantity"
+              required
+              min="0"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">
+            {{ isEditMode ? 'Update' : 'Add' }}
+          </button>
+          <button *ngIf="isEditMode" type="button" class="btn btn-secondary ms-2" (click)="cancelEdit()">
+            Cancel
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

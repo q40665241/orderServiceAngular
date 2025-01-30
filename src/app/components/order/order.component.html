@@ -1,0 +1,86 @@
+<div class="order-container">
+    <h1>Order Management</h1>
+  
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  
+    <!-- Order List -->
+    <div *ngIf="orders.length > 0; else noOrders">
+      <table class="table table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>Order ID</th>
+            <th>User</th>
+            <th>Products</th>
+            <th>Total Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td>{{ order.id }}</td>
+            <td>{{ order.user.name }}</td>
+            <td>
+              <ul>
+                <li *ngFor="let product of order.products">
+                  {{ product.name }} ({{ product.quantity }})
+                </li>
+              </ul>
+            </td>
+            <td>{{ order.totalPrice | currency }}</td>
+            <td>{{ order.status || 'Pending' }}</td>
+            <td>
+              <button class="btn btn-warning btn-sm" (click)="editOrder(order)">Edit</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteOrder(order.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- No Orders Message -->
+    <ng-template #noOrders>
+      <div class="alert alert-info">No orders available.</div>
+    </ng-template>
+  
+  <!-- Add/Edit Order Form -->
+<div class="card mt-4" id="order-form">
+    <div class="card-body">
+      <h2>{{ isEditMode ? 'Edit Order' : 'Add Order' }}</h2>
+      <form (ngSubmit)="isEditMode ? updateOrder() : addOrder()">
+        
+        <div class="mb-3">
+          <label for="userId" class="form-label">User</label>
+          <select [(ngModel)]="orderForm.user.id" name="userId" class="form-control" required>
+            <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+          </select>
+        </div>
+  
+        <div class="mb-3">
+          <label for="status" class="form-label">Status</label>
+          <input type="text" [(ngModel)]="orderForm.status" name="status" class="form-control" required />
+        </div>
+  
+        <!-- Only show products section in Edit Mode -->
+        <div class="mb-3" *ngIf="isEditMode">
+          <label class="form-label">Products</label>
+          <div *ngFor="let product of orderForm.products; let i = index">
+            <div class="input-group">
+              <select [(ngModel)]="product.id" name="productId{{i}}" class="form-control">
+                <option *ngFor="let p of products" [value]="p.id">{{ p.name }}</option>
+              </select>
+              <button type="button" class="btn btn-danger" (click)="removeProduct(i)">Remove</button>
+            </div>
+          </div>
+          <button type="button" class="btn btn-success mt-2" (click)="addProduct()">Add Product</button>
+        </div>
+  
+        <button type="submit" class="btn btn-primary">
+          {{ isEditMode ? 'Update' : 'Add' }} Order
+        </button>
+        <button type="button" class="btn btn-secondary ms-2" (click)="cancelEdit()" *ngIf="isEditMode">Cancel</button>
+      </form>
+    </div>
+  </div>
+  

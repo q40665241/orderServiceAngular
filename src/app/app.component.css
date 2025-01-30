@@ -1,0 +1,117 @@
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa; /* Light gray background */
+  color: #343a40; /* Dark text for readability */
+}
+
+/* Navbar */
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #ffffff;
+  padding: 0.5rem 1rem; /* Adjust padding for better spacing */
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-right: 1rem; /* Space between the brand and the links */
+}
+
+.navbar-nav {
+  display: flex; /* Ensures horizontal alignment */
+  flex-direction: row; /* Forces items to align in a row */
+  align-items: center; /* Vertically centers items */
+  gap: 1rem; /* Adds consistent spacing between links */
+}
+
+.navbar-nav .nav-link {
+  color: #343a40; /* Default dark text color */
+  margin: 0; /* No extra margin is needed */
+  padding: 0.5rem 1rem; /* Adds space around each link */
+  border-radius: 0.4rem; /* Optional: slight rounding for hover effects */
+  transition: color 0.3s ease, background-color 0.3s ease; /* Smooth hover effect */
+  text-decoration: none; /* Remove underline */
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffffff; /* White text on hover */
+  background-color: #007bff; /* Blue background on hover */
+}
+
+.navbar-nav .nav-link.active {
+  color: #ffffff; /* White text for active link */
+  background-color: #0056b3; /* Darker blue for active link */
+}
+
+
+/* Sidebar */
+#sidebar {
+  background-color: #ffffff; /* White sidebar */
+  height: calc(100vh - 56px); /* Full height minus navbar */
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow on the right */
+  position: fixed;
+  left: 0;
+  top: 100px; /* Navbar height */
+  width: 250px; /* Fixed width for the sidebar */
+  overflow-y: auto;
+  display: flex; /* Flex layout for vertical alignment */
+  flex-direction: column; /* Arrange items vertically */
+  gap: 1rem; /* Add space between items */
+}
+
+.list-group {
+  width: 100%; /* Ensure the list group takes up the full sidebar width */
+  padding: 0;
+  margin: 0;
+  border-radius: 0.5rem;
+}
+
+.list-group-item {
+  display: block;
+  width: 100%; /* Make each item stretch the sidebar width */
+  text-align: left; /* Align text to the left */
+  border: none;
+  border-radius: 0.4rem;
+  padding: 1rem 1.5rem; /* Add spacing inside each item */
+  font-size: 1.2rem; /* Adjust font size for readability */
+  transition: all 0.3s ease;
+  color: #343a40; /* Default text color */
+}
+
+.list-group-item:hover {
+  background-color: #007bff;
+  color: #ffffff; /* White text on hover */
+}
+
+.list-group-item.active {
+  background-color: #0056b3; /* Darker blue for active */
+  color: #ffffff; /* White text for active item */
+}
+
+/* Main Content */
+#content {
+  margin-left: 260px; /* Adjusted to account for fixed sidebar width */
+  padding: 2rem;
+}
+
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  #sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+  }
+
+  #content {
+      margin-left: 0;
+      padding: 1rem;
+  }
+}

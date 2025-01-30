@@ -1,0 +1,79 @@
+<div class="container mt-4 user-profile-container">
+  <h2 class="mb-4">User Profiles</h2>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- User List -->
+  <div *ngIf="users.length > 0; else noUsers">
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm me-2" (click)="editUser(user)">
+              <i class="bi bi-pencil-square"></i> Update
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- No Users Fallback -->
+  <ng-template #noUsers>
+    <div class="alert alert-info">No users available to display.</div>
+  </ng-template>
+
+  <!-- Add/Update User Form -->
+  <div class="card mt-4">
+    <div class="card-body">
+      <h3 class="card-title">{{ isEditMode ? 'Update User' : 'Add New User' }}</h3>
+      <form (submit)="isEditMode ? updateUser() : addUser()">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            [(ngModel)]="userForm.name"
+            name="name"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            [(ngModel)]="userForm.email"
+            name="email"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">
+          {{ isEditMode ? 'Update' : 'Add' }}
+        </button>
+        <button *ngIf="isEditMode" type="button" class="btn btn-secondary ms-2" (click)="cancelEdit()">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
