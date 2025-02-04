@@ -8,13 +8,15 @@ import { ProductsComponent } from './components/products/products.component';
 import { OrderComponent } from './components/order/order.component';
 import { HttpClientModule } from '@angular/common/http'; 
 import { FormsModule } from '@angular/forms';
+import { PlaceOrderComponent } from './components/place-order/place-order.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserProfileComponent,
     ProductsComponent,
-    OrderComponent
+    OrderComponent,
+    PlaceOrderComponent
   ],
   imports: [
     BrowserModule,

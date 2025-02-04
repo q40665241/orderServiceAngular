@@ -46,17 +46,23 @@ export class UserProfileComponent implements OnInit {
 
   // Delete a user using the UserService
   deleteUser(userId: number): void {
+
     if (!confirm('Are you sure you want to delete this user?')) return;
 
     this.userService.deleteUser(userId).subscribe(
       () => {
         this.users = this.users.filter((user) => user.id !== userId);
+        alert('User deleted successfully');
+        this.resetForm();
       },
       (error) => {
         console.error('Error deleting user:', error);
+         
+        this.resetForm();
       }
     );
   }
+  
 
   // Edit a user (populate the form with user data)
   editUser(user: any): void {

@@ -22,9 +22,9 @@ export class UserService {
 
   // Delete a user
   deleteUser(userId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${userId}`);
+    return this.http.delete<void>(`${this.apiUrl}/${userId}`,{ responseType: 'text' as 'json' });
   }
-
+//return this.http.delete<void>(`${this.apiUrl}/${userId}`, { responseType: 'text' as 'json' });
   // Update a user
   updateUser(user: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${user.id}`, user);
