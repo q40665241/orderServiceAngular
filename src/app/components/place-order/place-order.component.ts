@@ -51,21 +51,27 @@ export class PlaceOrderComponent implements OnInit {
     this.loadUsers();
     this.getProducts();
     this.loadCart(); // Load cart from localStorage
-    this.loadUsername();
+    
   }
 
   loadUsers() {
     this.userService.getUsers().subscribe(
-      (data: User[]) => (this.users = data),
+      (data: User[]) => {
+        this.users = data;
+        this.loadUsername(); // Now we load the username
+      },
       (error) => console.error('Error fetching users:', error)
     );
   }
+  
   loadUsername() {
+    
     const savedUsername = localStorage.getItem('username');
     if (savedUsername) {
       this.username = savedUsername;
       this.selectedUser = this.users.find(user => user.name.toLowerCase() === savedUsername.toLowerCase()) || null;
       this.isUsernameEntered = !!this.selectedUser;
+    
     }
   }
   logout() {
@@ -116,7 +122,7 @@ export class PlaceOrderComponent implements OnInit {
     } else {
       this.cart.push({ ...product, quantity: 1 });
     }
-
+    
     this.saveCart(); // Save cart to localStorage
   }
 
@@ -133,7 +139,8 @@ export class PlaceOrderComponent implements OnInit {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
       this.cart = JSON.parse(savedCart);
-      
+      console.log("Loaded Cart:", this.cart);
+
     }
   }
 
@@ -157,13 +164,14 @@ export class PlaceOrderComponent implements OnInit {
     }
 
     this.addOrder();
-    this.cart = []; // Clear the cart after checkout
-    this.saveCart();
   }
 
   addOrder(): void {
+   
     if (!this.selectedUser) return;
+    console.log("Cart checked in addorder:", this.cart);
 
+    console.log("check out");
     this.orderService.createOrder(this.selectedUser.id).subscribe(
       (response: { id: number }) => {
         this.orderId = response.id; // Store order ID
@@ -177,22 +185,27 @@ export class PlaceOrderComponent implements OnInit {
   }
 
   updateOrder(): void {
-    alert('updateing');
+    console.log("Cart:", this.cart);
+
+    console.log("Order ID:", this.orderId);
+    console.log("Selected User:", this.selectedUser);
+     
     if (!this.orderId || !this.selectedUser) {
       this.errorMessage = 'Order not found or user not selected.';
       return;
     }
 
     if (this.cart.length === 0) {
-      this.errorMessage = 'Cart is empty, cannot update order.';
+       alert('Cart is empty, cannot update order.');
       return;
     }
-
+    alert('updateing');
     for (const product of this.cart) {
       this.orderService.updateOrder(this.orderId, product.id, this.selectedUser.id);
       
     }
-
+    this.cart = [];
+    this.saveCart();
     alert('Order placed successfully!');
 
   }
