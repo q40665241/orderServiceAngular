@@ -8,7 +8,7 @@ interface Product {
   name: string;
   price: number;
   quantity: number;
-  image: string;
+  imageUrl: string;
 }
 
 interface User {
@@ -38,9 +38,6 @@ export class PlaceOrderComponent implements OnInit {
   hintMessage: string = '';
   errorMessage: string = '';
   orderId: number | null = null;
-  productImageMap = {
-    default: 'https://cdn.informaconnect.com/platform/files/public/2021-02/background/600x450/2021-Hero-Shot-Logo-Trans_1613683862.jpg?VersionId=eQrnWua8OHfFHX99jQRs5_uA.XgO6kzH'
-  };
   constructor(
     private userService: UserService,
     private productService: ProductService,
@@ -90,7 +87,7 @@ export class PlaceOrderComponent implements OnInit {
       (response: Product[]) => {
         this.products = response.map(product => ({
           ...product,
-          image: this.productImageMap.default // Assign the same image to all products
+          
         }));
       },
       (error) => console.error('Error fetching products:', error)

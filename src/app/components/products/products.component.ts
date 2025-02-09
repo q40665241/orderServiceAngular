@@ -9,7 +9,7 @@ import { ProductService } from './products.service'; // Import ProductService
 export class ProductsComponent implements OnInit {
   products: any[] = [];
   errorMessage: string = '';
-  productForm = { id: null, name: '', description: '', price: 0, quantity: 0 }; // Model for adding/updating products
+  productForm = { id: null, name: '', description: '', price: 0, quantity: 0,imageUrl: ''  }; // Model for adding/updating products
   isEditMode: boolean = false;
 
   constructor(private productService: ProductService) {} // Inject ProductService
@@ -87,7 +87,7 @@ export class ProductsComponent implements OnInit {
 
   // Reset form
   resetForm(): void {
-    this.productForm = { id: null, name: '', description: '', price: 0, quantity: 0 };
+    this.productForm = { id: null, name: '', description: '', price: 0, quantity: 0 ,imageUrl: '' };
     this.isEditMode = false;
   }
 }

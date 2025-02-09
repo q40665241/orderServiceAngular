@@ -16,6 +16,7 @@
             <th>Description</th>
             <th>Price</th>
             <th>Quantity</th>
+            <th>Image</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -26,6 +27,9 @@
             <td>{{ product.description }}</td>
             <td>{{ product.price }}</td>
             <td>{{ product.quantity }}</td>
+            <td>
+              <img [src]="product.imageUrl" alt="Product Image" class="product-image" />
+            </td>
             <td>
               <button class="btn btn-warning btn-sm me-2" (click)="editProduct(product)">
                 <i class="bi bi-pencil-square"></i> Update
@@ -93,6 +97,14 @@
               required
               min="0"
             />
+          </div>
+          <div class="mb-3">
+            <label for="imageUrl" class="form-label">Image URL</label>
+            <input type="text"
+             class="form-control"
+              id="imageUrl"
+               [(ngModel)]="productForm.imageUrl" 
+               name="imageUrl" required />
           </div>
           <button type="submit" class="btn btn-primary">
             {{ isEditMode ? 'Update' : 'Add' }}
